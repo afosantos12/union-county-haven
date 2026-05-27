@@ -1,19 +1,31 @@
 import { Instagram, Facebook, Linkedin, Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import logo from "@/assets/logo-mdrg.png";
+
+const exploreLinks = [
+  { to: "/buy", label: "Buy" },
+  { to: "/sell", label: "Sell" },
+  { to: "/neighborhoods", label: "Neighborhoods" },
+  { to: "/about", label: "About" },
+  { to: "/journal", label: "Journal" },
+  { to: "/contact", label: "Contact" },
+] as const;
 
 export function Footer() {
   return (
     <footer className="gradient-navy text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-12 lg:px-10">
         <div className="lg:col-span-5">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-gold/40 text-gold font-serif">
-              M
-            </span>
-            <div>
-              <div className="font-serif text-xl">Michelle David</div>
-              <div className="eyebrow !text-[0.6rem]">Realty Group</div>
-            </div>
-          </div>
+          <Link to="/" aria-label="Michelle David Realty Group home">
+            <img
+              src={logo}
+              alt="Michelle David Realty Group"
+              width={1172}
+              height={274}
+              className="h-14 w-auto"
+              loading="lazy"
+            />
+          </Link>
           <p className="mt-6 max-w-sm text-sm text-white/70">
             Boutique luxury real estate serving Union County, New Jersey — and the families
             who call it home.
@@ -35,15 +47,13 @@ export function Footer() {
         <div className="lg:col-span-3">
           <h4 className="eyebrow">Explore</h4>
           <ul className="mt-5 space-y-3 text-sm text-white/75">
-            {["Buy", "Sell", "Featured Listings", "Neighborhoods", "Market Insights", "About"].map(
-              (l) => (
-                <li key={l}>
-                  <a href="#" className="transition-colors hover:text-gold">
-                    {l}
-                  </a>
-                </li>
-              ),
-            )}
+            {exploreLinks.map((l) => (
+              <li key={l.to}>
+                <Link to={l.to} className="transition-colors hover:text-gold">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
