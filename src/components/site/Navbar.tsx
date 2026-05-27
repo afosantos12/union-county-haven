@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X, Phone } from "lucide-react";
+import logo from "@/assets/logo-mdrg.png";
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/", label: "Buy" },
-  { to: "/", label: "Sell" },
-  { to: "/", label: "Neighborhoods" },
-  { to: "/", label: "About" },
-  { to: "/", label: "Journal" },
-  { to: "/", label: "Contact" },
-];
+  { to: "/buy", label: "Buy" },
+  { to: "/sell", label: "Sell" },
+  { to: "/neighborhoods", label: "Neighborhoods" },
+  { to: "/about", label: "About" },
+  { to: "/journal", label: "Journal" },
+  { to: "/contact", label: "Contact" },
+] as const;
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,31 +28,33 @@ export function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/85 backdrop-blur-md border-b border-border shadow-card-soft"
-          : "bg-transparent"
+          ? "bg-background/90 backdrop-blur-md border-b border-border shadow-card-soft"
+          : "bg-gradient-to-b from-black/40 to-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <Link to="/" className="flex items-center gap-3">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-sm gradient-navy text-gold font-serif text-lg">
-            M
-          </span>
-          <span className={`flex flex-col leading-tight ${scrolled ? "text-foreground" : "text-white"}`}>
-            <span className="font-serif text-base sm:text-lg">Michelle David</span>
-            <span className="eyebrow !text-[0.6rem]" style={{ color: "var(--gold)" }}>
-              Realty Group
-            </span>
-          </span>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-10">
+        <Link to="/" className="flex items-center gap-3" aria-label="Michelle David Realty Group home">
+          <img
+            src={logo}
+            alt="Michelle David Realty Group"
+            width={1172}
+            height={274}
+            className={`h-10 w-auto md:h-12 transition-all duration-300 ${
+              scrolled ? "" : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+            }`}
+          />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {links.map((l) => (
             <Link
               key={l.label}
               to={l.to}
+              activeOptions={{ exact: l.to === "/" }}
               className={`text-sm font-medium tracking-wide transition-colors hover:text-gold ${
-                scrolled ? "text-foreground/80" : "text-white/85"
+                scrolled ? "text-foreground/80" : "text-white/90"
               }`}
+              activeProps={{ style: { color: "var(--gold)" } }}
             >
               {l.label}
             </Link>
@@ -68,12 +71,12 @@ export function Navbar() {
             <Phone className="h-4 w-4" />
             (908) 555-0100
           </a>
-          <a
-            href="#valuation"
+          <Link
+            to="/sell"
             className="rounded-sm border border-gold bg-gold px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-gold-foreground transition-all hover:bg-transparent hover:text-gold"
           >
             Home Valuation
-          </a>
+          </Link>
         </div>
 
         <button
@@ -98,12 +101,13 @@ export function Navbar() {
                 {l.label}
               </Link>
             ))}
-            <a
-              href="#valuation"
+            <Link
+              to="/sell"
+              onClick={() => setOpen(false)}
               className="mt-3 rounded-sm bg-gold px-5 py-3 text-center text-xs font-semibold uppercase tracking-widest text-gold-foreground"
             >
               Free Home Valuation
-            </a>
+            </Link>
             <a href="tel:+19085550100" className="mt-2 flex items-center justify-center gap-2 py-2 text-sm text-foreground">
               <Phone className="h-4 w-4" /> (908) 555-0100
             </a>
