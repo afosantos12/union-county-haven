@@ -63,13 +63,13 @@ export function Navbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <a
-            href="tel:+19085550100"
+            href="tel:+19082766299"
             className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-gold ${
               scrolled ? "text-foreground" : "text-white"
             }`}
           >
             <Phone className="h-4 w-4" />
-            (908) 555-0100
+            (908) 276-6299
           </a>
           <Link
             to="/sell"
@@ -108,8 +108,8 @@ export function Navbar() {
             >
               Free Home Valuation
             </Link>
-            <a href="tel:+19085550100" className="mt-2 flex items-center justify-center gap-2 py-2 text-sm text-foreground">
-              <Phone className="h-4 w-4" /> (908) 555-0100
+            <a href="tel:+19082766299" className="mt-2 flex items-center justify-center gap-2 py-2 text-sm text-foreground">
+              <Phone className="h-4 w-4" /> (908) 276-6299
             </a>
           </nav>
         </div>

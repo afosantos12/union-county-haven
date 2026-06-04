@@ -63,21 +63,21 @@ export function Footer() {
             <li className="flex items-start gap-3">
               <MapPin className="mt-0.5 h-4 w-4 text-gold" />
               <span>
-                500 North Avenue
+                632 Boulevard
                 <br />
                 Kenilworth, NJ 07033
               </span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 text-gold" />
-              <a href="tel:+19085550100" className="hover:text-gold">
-                (908) 555-0100
+              <a href="tel:+19082766299" className="hover:text-gold">
+                (908) 276-6299
               </a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="h-4 w-4 text-gold" />
-              <a href="mailto:hello@michelledavidrealty.com" className="hover:text-gold">
-                hello@michelledavidrealty.com
+              <a href="mailto:michelle@michelledavidgroup.com" className="hover:text-gold">
+                michelle@michelledavidgroup.com
               </a>
             </li>
           </ul>
