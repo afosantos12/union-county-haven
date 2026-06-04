@@ -25,6 +25,10 @@ export function Hero() {
           <span className="block italic text-gold">in New Jersey</span>
         </h1>
 
+        <p className="reveal reveal-delay-1-5 mx-auto mt-3 text-sm font-medium uppercase tracking-widest text-gold/90">
+          Rooted in Union County. Serving clients across New Jersey.
+        </p>
+
         <p className="reveal reveal-delay-2 mx-auto mt-6 max-w-xl text-base text-white/85 sm:text-lg">
           Boutique real estate guidance for the discerning buyer and seller — from Westfield
           to Summit, Cranford to Kenilworth.
