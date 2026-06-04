@@ -1,7 +1,21 @@
+import { useState } from "react";
 import { Search, MapPin } from "lucide-react";
 import heroHome from "@/assets/hero-home.jpg";
 
+function toZillowUrl(query: string) {
+  const clean = query.trim().replace(/\s+/g, "-");
+  return `https://www.zillow.com/homes/${encodeURIComponent(clean)}_rb/`;
+}
+
 export function Hero() {
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    window.open(toZillowUrl(query), "_blank", "noopener,noreferrer");
+  };
+
   return (
     <section className="relative isolate flex min-h-[100svh] items-center justify-center overflow-hidden">
       <div className="absolute inset-0 -z-10">
@@ -36,13 +50,15 @@ export function Hero() {
 
         {/* Search */}
         <form
+          onSubmit={handleSubmit}
           className="reveal reveal-delay-3 mx-auto mt-12 flex w-full max-w-3xl flex-col items-stretch gap-2 rounded-sm bg-white/95 p-2 shadow-luxury backdrop-blur md:flex-row"
-          onSubmit={(e) => e.preventDefault()}
         >
           <div className="flex flex-1 items-center gap-3 px-4 py-3">
             <MapPin className="h-5 w-5 shrink-0 text-navy/60" />
             <input
               type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="City, neighborhood, ZIP, or MLS #"
               className="w-full bg-transparent text-sm text-foreground placeholder:text-foreground/50 focus:outline-none"
             />
