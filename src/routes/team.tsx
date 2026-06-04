@@ -5,6 +5,7 @@ import heroTeam from "@/assets/hero-team.jpg";
 import michelleAsset from "@/assets/team-michelle.png.asset.json";
 import afonsoAsset from "@/assets/team-afonso.jpg.asset.json";
 import dessireAsset from "@/assets/team-dessire.png.asset.json";
+import joePhoto from "@/assets/team-joe.png";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
@@ -37,12 +38,13 @@ type TeamMember = {
 
 const team: TeamMember[] = [
   {
-    name: "Afonso Santos",
-    title: "REALTOR®",
-    image: afonsoAsset.url,
+    name: "Joseph Ricci",
+    title: "Licensed Broker Associate",
+    image: joePhoto,
     bio: [
-      "Afonso Santos is a REALTOR® with Michelle David Realty Group, committed to helping buyers, sellers, renters, and investors achieve their real estate goals. Growing up in a family involved in real estate investing, he developed a passion for the industry and enjoys helping clients navigate every step of the real estate process.",
-      "As a New Jersey native who is fluent in both English and Portuguese, Afonso prides himself on providing personalized service, honest communication, and a smooth real estate experience for every client.",
+      "An Essex County native, Joseph was born and raised in Millburn and has lived in Union since 2016. With over 24 years of real estate experience, Joe offers solid, informed advice about local neighborhoods, schools, transportation, and everything in between.",
+      "Before joining Michelle David Realty Group, Joseph was a Financial Analyst with Lucent Technologies and AT&T. That business background sharpened the communication, troubleshooting, and organizational skills he brings to every transaction.",
+      "A community volunteer on several youth sports leagues — basketball, softball, and soccer — and a member of St. James Church in Springfield, Joe's dedication extends well beyond the closing table. His client-first approach and Circle of Excellence Award speak for themselves.",
     ],
   },
   {
@@ -53,6 +55,15 @@ const team: TeamMember[] = [
       "Dessire Vega is a bilingual REALTOR® with Michelle David Realty Group, proudly serving New Jersey. She is committed to making real estate accessible and transparent for every client. Whether you are buying, selling, investing, renting, or simply curious about the market, Dessire guides you with honesty, dedication, and a personal touch every step of the way.",
       "She will answer your questions throughout the process, and if she doesn't have the answer right away, she will find it for you.",
       "Professional, dedicated, and trusted. Hablo Español.",
+    ],
+  },
+  {
+    name: "Afonso Santos",
+    title: "REALTOR®",
+    image: afonsoAsset.url,
+    bio: [
+      "Afonso Santos is a REALTOR® with Michelle David Realty Group, committed to helping buyers, sellers, renters, and investors achieve their real estate goals. Growing up in a family involved in real estate investing, he developed a passion for the industry and enjoys helping clients navigate every step of the real estate process.",
+      "As a New Jersey native who is fluent in both English and Portuguese, Afonso prides himself on providing personalized service, honest communication, and a smooth real estate experience for every client.",
     ],
   },
 ];
@@ -164,9 +175,11 @@ function TeamPage() {
           </div>
 
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:gap-10">
-            {team.map((m) => (
-              <TeamMemberCard key={m.name} member={m} />
-            ))}
+            <TeamMemberCard member={team[0]} />
+            <TeamMemberCard member={team[1]} />
+            <div className="md:col-span-2 md:mx-auto md:w-1/2">
+              <TeamMemberCard member={team[2]} />
+            </div>
           </div>
         </div>
       </section>
