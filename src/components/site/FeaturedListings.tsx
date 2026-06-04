@@ -49,7 +49,7 @@ export function FeaturedListings() {
             </h2>
           </div>
           <a
-            href="#search"
+            href="/search"
             className="group inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-navy"
           >
             View all properties

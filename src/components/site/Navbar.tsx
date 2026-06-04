@@ -6,6 +6,7 @@ import logo from "@/assets/logo-mdrg.png";
 const links = [
   { to: "/", label: "Home" },
   { to: "/buy", label: "Buy" },
+  { to: "/search", label: "Listings" },
   { to: "/sell", label: "Sell" },
   { to: "/neighborhoods", label: "Neighborhoods" },
   { to: "/about", label: "About" },
@@ -33,7 +34,7 @@ export function Navbar() {
           : "bg-gradient-to-b from-black/40 to-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 xl:px-10">
         <Link to="/" className="flex items-center gap-3" aria-label="Michelle David Realty Group home">
           <img
             src={logo}
@@ -46,7 +47,7 @@ export function Navbar() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {links.map((l) => (
             <Link
               key={l.label}
@@ -62,7 +63,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <a
             href="tel:+19082766299"
             className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-gold ${
@@ -82,7 +83,7 @@ export function Navbar() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className={`lg:hidden ${scrolled ? "text-foreground" : "text-white"}`}
+          className={`xl:hidden ${scrolled ? "text-foreground" : "text-white"}`}
           aria-label="Toggle menu"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -90,7 +91,7 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-md">
+        <div className="xl:hidden border-t border-border bg-background/95 backdrop-blur-md">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {links.map((l) => (
               <Link

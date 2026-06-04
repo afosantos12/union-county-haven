@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as SellRouteImport } from './routes/sell'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as NeighborhoodsRouteImport } from './routes/neighborhoods'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -26,6 +27,11 @@ const TeamRoute = TeamRouteImport.update({
 const SellRoute = SellRouteImport.update({
   id: '/sell',
   path: '/sell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NeighborhoodsRoute = NeighborhoodsRouteImport.update({
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/neighborhoods': typeof NeighborhoodsRoute
+  '/search': typeof SearchRoute
   '/sell': typeof SellRoute
   '/team': typeof TeamRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/neighborhoods': typeof NeighborhoodsRoute
+  '/search': typeof SearchRoute
   '/sell': typeof SellRoute
   '/team': typeof TeamRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/neighborhoods': typeof NeighborhoodsRoute
+  '/search': typeof SearchRoute
   '/sell': typeof SellRoute
   '/team': typeof TeamRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/neighborhoods'
+    | '/search'
     | '/sell'
     | '/team'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/neighborhoods'
+    | '/search'
     | '/sell'
     | '/team'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/neighborhoods'
+    | '/search'
     | '/sell'
     | '/team'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   JournalRoute: typeof JournalRoute
   NeighborhoodsRoute: typeof NeighborhoodsRoute
+  SearchRoute: typeof SearchRoute
   SellRoute: typeof SellRoute
   TeamRoute: typeof TeamRoute
 }
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/sell'
       fullPath: '/sell'
       preLoaderRoute: typeof SellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/neighborhoods': {
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   JournalRoute: JournalRoute,
   NeighborhoodsRoute: NeighborhoodsRoute,
+  SearchRoute: SearchRoute,
   SellRoute: SellRoute,
   TeamRoute: TeamRoute,
 }

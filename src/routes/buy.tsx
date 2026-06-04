@@ -33,10 +33,7 @@ function BuyPage() {
 
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto max-w-5xl px-6 lg:px-10">
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="flex flex-col items-stretch gap-2 rounded-sm bg-card p-2 shadow-luxury md:flex-row"
-          >
+          <div className="flex flex-col items-stretch gap-2 rounded-sm bg-card p-2 shadow-luxury md:flex-row">
             <div className="flex flex-1 items-center gap-3 px-4 py-3">
               <MapPin className="h-5 w-5 shrink-0 text-navy/60" />
               <input
@@ -45,10 +42,13 @@ function BuyPage() {
                 className="w-full bg-transparent text-sm text-foreground placeholder:text-foreground/50 focus:outline-none"
               />
             </div>
-            <button className="flex items-center justify-center gap-2 rounded-sm bg-navy px-7 py-3 text-xs font-semibold uppercase tracking-widest text-navy-foreground transition-all hover:bg-gold hover:text-gold-foreground">
+            <a
+              href="/search"
+              className="flex items-center justify-center gap-2 rounded-sm bg-navy px-7 py-3 text-xs font-semibold uppercase tracking-widest text-navy-foreground transition-all hover:bg-gold hover:text-gold-foreground"
+            >
               <Search className="h-4 w-4" /> Search Homes
-            </button>
-          </form>
+            </a>
+          </div>
 
           <div className="mt-16 grid gap-8 md:grid-cols-3">
             {[
