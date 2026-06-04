@@ -37,24 +37,24 @@ function ContactPage() {
               <div className="mt-4 flex items-start gap-3 text-foreground">
                 <MapPin className="mt-0.5 h-5 w-5 text-gold" />
                 <div className="text-sm leading-relaxed">
-                  Union County, New Jersey
+                  632 Boulevard
                   <br />
-                  By appointment
+                  Kenilworth, NJ 07033
                 </div>
               </div>
             </div>
             <div>
               <p className="eyebrow">Phone</p>
-              <a href="tel:+19085550100" className="mt-4 flex items-center gap-3 text-foreground hover:text-gold">
+              <a href="tel:+19082766299" className="mt-4 flex items-center gap-3 text-foreground hover:text-gold">
                 <Phone className="h-5 w-5 text-gold" />
-                <span className="text-sm">(908) 555-0100</span>
+                <span className="text-sm">(908) 276-6299</span>
               </a>
             </div>
             <div>
               <p className="eyebrow">Email</p>
-              <a href="mailto:hello@michelledavidrealty.com" className="mt-4 flex items-center gap-3 text-foreground hover:text-gold">
+              <a href="mailto:michelle@michelledavidgroup.com" className="mt-4 flex items-center gap-3 text-foreground hover:text-gold">
                 <Mail className="h-5 w-5 text-gold" />
-                <span className="text-sm">hello@michelledavidrealty.com</span>
+                <span className="text-sm">michelle@michelledavidgroup.com</span>
               </a>
             </div>
           </aside>
