@@ -4,7 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import heroTeam from "@/assets/hero-team.jpg";
 import michellePhoto from "@/assets/team-michelle-new.png";
 import afonsoPhoto from "@/assets/team-afonso-new.jpg";
-import dessireAsset from "@/assets/team-dessire.png.asset.json";
+import dessirePhoto from "@/assets/team-dessire-new.jpg";
 import joePhoto from "@/assets/team-joe.png";
 
 export const Route = createFileRoute("/team")({
@@ -51,7 +51,7 @@ const team: TeamMember[] = [
   {
     name: "Dessire Vega",
     title: "REALTOR®",
-    image: dessireAsset.url,
+    image: dessirePhoto,
     bio: [
       "Dessire Vega is a bilingual REALTOR® with Michelle David Realty Group, proudly serving New Jersey. She is committed to making real estate accessible and transparent for every client. Whether you are buying, selling, investing, renting, or simply curious about the market, Dessire guides you with honesty, dedication, and a personal touch every step of the way.",
       "She will answer your questions throughout the process, and if she doesn't have the answer right away, she will find it for you.",
