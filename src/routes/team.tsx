@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
 import heroTeam from "@/assets/hero-team.jpg";
-import michelleAsset from "@/assets/team-michelle.png.asset.json";
-import afonsoAsset from "@/assets/team-afonso.jpg.asset.json";
+import michellePhoto from "@/assets/team-michelle-new.png";
+import afonsoPhoto from "@/assets/team-afonso-new.jpg";
 import dessireAsset from "@/assets/team-dessire.png.asset.json";
 import joePhoto from "@/assets/team-joe.png";
 
@@ -61,7 +61,7 @@ const team: TeamMember[] = [
   {
     name: "Afonso Santos",
     title: "REALTOR®",
-    image: afonsoAsset.url,
+    image: afonsoPhoto,
     bio: [
       "Afonso Santos is a REALTOR® with Michelle David Realty Group, committed to helping buyers, sellers, renters, and investors achieve their real estate goals. Growing up in a family involved in real estate investing, he developed a passion for the industry and enjoys helping clients navigate every step of the real estate process.",
       "As a New Jersey native who is fluent in both English and Portuguese, Afonso prides himself on providing personalized service, honest communication, and a smooth real estate experience for every client.",
@@ -119,7 +119,7 @@ function TeamPage() {
                 <div className="absolute -inset-4 -z-10 rounded-sm bg-gradient-to-br from-gold/30 to-navy/10 blur-xl" />
                 <div className="relative overflow-hidden rounded-sm border border-gold/40 shadow-luxury">
                   <img
-                    src={michelleAsset.url}
+                    src={michellePhoto}
                     alt="Michelle David, Broker and Owner of Michelle David Realty Group"
                     className="aspect-[4/5] w-full object-cover"
                   />
