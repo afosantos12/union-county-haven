@@ -32,16 +32,33 @@ export function Footer() {
             who call it home.
           </p>
           <div className="mt-8 flex gap-3">
-            {[Instagram, Facebook, Linkedin].map((Icon, i) => (
-              <a
-                key={i}
-                href="#"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-white/15 text-white/80 transition-colors hover:border-gold hover:text-gold"
-                aria-label="social"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
+            <a
+              href="https://www.instagram.com/michelledavidrealtygroup/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-white/15 text-white/80 transition-colors hover:border-gold hover:text-gold"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.facebook.com/michelledavidrealtygroup/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-white/15 text-white/80 transition-colors hover:border-gold hover:text-gold"
+              aria-label="Facebook"
+            >
+              <Facebook className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/michelle-david-realty-group/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-white/15 text-white/80 transition-colors hover:border-gold hover:text-gold"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
           </div>
         </div>
 
