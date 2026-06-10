@@ -22,9 +22,9 @@ function NeighborhoodsPage() {
   return (
     <SiteLayout>
       <PageHero
-        eyebrow="Explore"
-        title={<>The towns we <span className="italic text-gold">call home</span></>}
-        subtitle="Tree-lined streets, top-rated schools, NYC-bound trains, and a sense of community you can feel. Start with the towns below."
+        eyebrow="Local Expertise · Statewide Reach"
+        title={<>Deep roots, <span className="italic text-gold">everywhere you need us</span></>}
+        subtitle="We've spent decades building block-by-block expertise across Union County — and we bring that same intelligence to buyers and sellers throughout New Jersey."
         image={heroNeighborhoods}
         imageAlt="Aerial view of Union County New Jersey neighborhood in autumn"
       />
