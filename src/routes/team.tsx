@@ -79,8 +79,7 @@ function TeamMemberCard({ member, revealDelay = 0 }: { member: TeamMember; revea
         <ImageReveal
           src={member.image}
           alt={`${member.name}, ${member.title} at Michelle David Realty Group`}
-          // Fixed height + object-top ensures face/head is always visible, not torso
-          className="w-full h-80 object-cover object-top transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+          className="w-full h-auto block"
           delay={revealDelay}
         />
         <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

@@ -49,12 +49,6 @@ export function ImageReveal({
         src={src}
         alt={alt}
         className={className}
-        style={{
-          // Subtle scale-in on the image itself as curtain lifts
-          transform: mounted && visible ? "scale(1)" : "scale(1.06)",
-          transition: `transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay + 200}ms`,
-          willChange: "transform",
-        }}
       />
       {/* The curtain — slides upward to reveal the image */}
       <div
