@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
 import { Testimonials } from "@/components/site/Testimonials";
+import { FadeUp } from "@/components/site/FadeUp";
 import heroAbout from "@/assets/hero-about.jpg";
 import { Shield, Users, MapPin, Award } from "lucide-react";
 
@@ -56,7 +57,7 @@ function AboutPage() {
       {/* Who we are */}
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
-          <div>
+          <FadeUp>
             <p className="eyebrow">Who We Are</p>
             <h2 className="mt-4 font-serif text-4xl text-navy md:text-5xl leading-tight">
               Local for life,<br />professional to the core.
@@ -76,8 +77,8 @@ function AboutPage() {
                 Get in Touch
               </Link>
             </div>
-          </div>
-          <div className="space-y-5 text-base leading-relaxed text-foreground/80">
+          </FadeUp>
+          <FadeUp delay={150} className="space-y-5 text-base leading-relaxed text-foreground/80">
             <p>
               Michelle David Realty Group was founded on a simple idea: Union County
               families and investors deserve the same caliber of representation
@@ -96,26 +97,28 @@ function AboutPage() {
               built a reputation for integrity, market expertise, and results that speak
               for themselves — not inflated statistics.
             </p>
-          </div>
+          </FadeUp>
         </div>
       </section>
 
       {/* Values */}
       <section className="bg-secondary/40 py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="mx-auto max-w-2xl text-center">
+          <FadeUp className="mx-auto max-w-2xl text-center">
             <p className="eyebrow">What We Stand For</p>
             <h2 className="mt-4 font-serif text-4xl text-navy md:text-5xl text-balance">
               The values behind <span className="italic">every transaction</span>
             </h2>
-          </div>
+          </FadeUp>
           <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <div key={v.title} className="rounded-sm border border-border bg-card p-8">
-                <v.icon className="h-6 w-6 text-gold" />
-                <h3 className="mt-5 font-serif text-xl text-navy">{v.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{v.body}</p>
-              </div>
+            {values.map((v, i) => (
+              <FadeUp key={v.title} delay={i * 100}>
+                <div className="rounded-sm border border-border bg-card p-8 h-full">
+                  <v.icon className="h-6 w-6 text-gold" />
+                  <h3 className="mt-5 font-serif text-xl text-navy">{v.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{v.body}</p>
+                </div>
+              </FadeUp>
             ))}
           </div>
         </div>

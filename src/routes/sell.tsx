@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
 import { Valuation } from "@/components/site/Valuation";
+import { FadeUp } from "@/components/site/FadeUp";
 import heroSell from "@/assets/hero-sell.jpg";
 import { TrendingUp, Camera, Megaphone, HandshakeIcon } from "lucide-react";
 
@@ -44,12 +45,14 @@ function SellPage() {
           </h2>
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {steps.map((s, i) => (
-              <div key={s.title} className="rounded-sm border border-border bg-card p-7">
-                <div className="text-xs font-semibold tracking-[0.3em] text-gold">0{i + 1}</div>
-                <s.icon className="mt-4 h-6 w-6 text-navy" />
-                <h3 className="mt-4 font-serif text-xl text-navy">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
-              </div>
+              <FadeUp key={s.title} delay={i * 100}>
+                <div className="rounded-sm border border-border bg-card p-7 h-full">
+                  <div className="text-xs font-semibold tracking-[0.3em] text-gold">0{i + 1}</div>
+                  <s.icon className="mt-4 h-6 w-6 text-navy" />
+                  <h3 className="mt-4 font-serif text-xl text-navy">{s.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+                </div>
+              </FadeUp>
             ))}
           </div>
         </div>

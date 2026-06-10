@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { FadeUp } from "@/components/site/FadeUp";
 
 // IDX Broker Showcase Widget
 // - Whitelist the site domain in IDX Broker → Account Settings → Approved Domains
@@ -31,7 +32,7 @@ export function FeaturedListings() {
     <section className="bg-background py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
 
-        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <FadeUp className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-xl">
             <p className="eyebrow">Featured Listings</p>
             <h2 className="mt-4 font-serif text-4xl text-navy md:text-5xl text-balance">
@@ -46,7 +47,7 @@ export function FeaturedListings() {
             View all properties
             <span className="h-px w-10 bg-navy transition-all group-hover:w-16 group-hover:bg-gold" />
           </a>
-        </div>
+        </FadeUp>
 
         <div className="mt-14 w-full">
           <IdxWidget />
