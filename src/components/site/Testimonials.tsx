@@ -38,7 +38,7 @@ export function Testimonials() {
 
         <div className="mt-16 grid gap-8 md:grid-cols-2">
           {googleReviews.map((r, i) => (
-            <FadeUp key={`${r.name}-${r.date}`} delay={i * 120}>
+            <FadeUp key={`${r.name}-${r.date}`} delay={i * 200}>
               <figure className="relative flex h-full flex-col rounded-sm bg-card p-8 shadow-card-soft">
                 <StarRow rating={r.rating} />
                 <blockquote className="mt-6 flex-1 text-sm leading-relaxed text-foreground/80">

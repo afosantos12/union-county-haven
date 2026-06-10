@@ -3,6 +3,7 @@ import cranford from "@/assets/hood-cranford.jpg";
 import summit from "@/assets/hood-summit.jpg";
 import kenilworth from "@/assets/hood-kenilworth.jpg";
 import { FadeUp } from "@/components/site/FadeUp";
+import { ImageReveal } from "@/components/site/ImageReveal";
 
 const hoods = [
   { name: "Westfield", img: westfield, search: "/search?q=Westfield+NJ", note: "Downtown charm, top-rated schools, and a thriving community just 35 minutes from NYC." },
@@ -37,18 +38,16 @@ export function Neighborhoods() {
 
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {hoods.map((h, i) => (
-              <FadeUp key={h.name} delay={i * 100}>
+              <FadeUp key={h.name} delay={i * 150}>
                 <a
                   href={h.search}
-                  className="group relative block aspect-[3/4] overflow-hidden rounded-sm shadow-card-soft"
+                  className="group relative block aspect-[3/4] rounded-sm shadow-card-soft overflow-hidden"
                 >
-                  <img
+                  <ImageReveal
                     src={h.img}
                     alt={`${h.name}, NJ`}
-                    loading="lazy"
-                    width={1024}
-                    height={1280}
-                    className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+                    className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110"
+                    delay={i * 150}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/30 to-transparent opacity-90" />
                   <div className="absolute inset-x-0 bottom-0 p-6 text-white">

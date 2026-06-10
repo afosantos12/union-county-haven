@@ -47,7 +47,7 @@ function SellPage() {
           </FadeUp>
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {steps.map((s, i) => (
-              <FadeUp key={s.title} delay={i * 100}>
+              <FadeUp key={s.title} delay={i * 180}>
                 <div className="rounded-sm border border-border bg-card p-7 h-full">
                   <div className="text-xs font-semibold tracking-[0.3em] text-gold">0{i + 1}</div>
                   <s.icon className="mt-4 h-6 w-6 text-navy" />

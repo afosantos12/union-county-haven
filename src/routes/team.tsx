@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
+import { ImageReveal } from "@/components/site/ImageReveal";
 import heroTeam from "@/assets/hero-team.jpg";
 import michellePhoto from "@/assets/team-michelle-new.png";
 import afonsoPhoto from "@/assets/team-afonso-new.jpg";
@@ -70,15 +71,15 @@ const team: TeamMember[] = [
   },
 ];
 
-function TeamMemberCard({ member }: { member: TeamMember }) {
+function TeamMemberCard({ member, revealDelay = 0 }: { member: TeamMember; revealDelay?: number }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-sm border border-border bg-card shadow-card-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury">
-      <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-        <img
+      <div className="relative aspect-[4/5] bg-muted">
+        <ImageReveal
           src={member.image}
           alt={`${member.name}, ${member.title} at Michelle David Realty Group`}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+          delay={revealDelay}
         />
         <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       </div>
@@ -118,11 +119,13 @@ function TeamPage() {
             <FadeUp direction="left" className="lg:col-span-5">
               <div className="relative">
                 <div className="absolute -inset-4 -z-10 rounded-sm bg-gradient-to-br from-gold/30 to-navy/10 blur-xl" />
-                <div className="relative overflow-hidden rounded-sm border border-gold/40 shadow-luxury">
-                  <img
+                <div className="rounded-sm border border-gold/40 shadow-luxury overflow-hidden">
+                  <ImageReveal
                     src={michellePhoto}
                     alt="Michelle David, Broker and Owner of Michelle David Realty Group"
                     className="aspect-[4/5] w-full object-cover"
+                    curtain="var(--gold)"
+                    delay={200}
                   />
                 </div>
                 <div className="absolute -bottom-4 -right-4 hidden h-24 w-24 border-2 border-gold sm:block float" />
@@ -177,10 +180,10 @@ function TeamPage() {
           </FadeUp>
 
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:gap-10">
-            <FadeUp delay={0}><TeamMemberCard member={team[0]} /></FadeUp>
-            <FadeUp delay={120}><TeamMemberCard member={team[1]} /></FadeUp>
-            <FadeUp delay={60} className="md:col-span-2 md:mx-auto md:w-1/2">
-              <TeamMemberCard member={team[2]} />
+            <FadeUp delay={0}><TeamMemberCard member={team[0]} revealDelay={0} /></FadeUp>
+            <FadeUp delay={200}><TeamMemberCard member={team[1]} revealDelay={200} /></FadeUp>
+            <FadeUp delay={100} className="md:col-span-2 md:mx-auto md:w-1/2">
+              <TeamMemberCard member={team[2]} revealDelay={100} />
             </FadeUp>
           </div>
         </div>

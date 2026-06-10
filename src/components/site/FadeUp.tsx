@@ -10,17 +10,21 @@ type FadeUpProps = {
   direction?: Direction;
 };
 
+// Expo-out easing — starts fast, decelerates smoothly to rest. Feels deliberate and premium.
+const EASING = "cubic-bezier(0.16, 1, 0.3, 1)";
+const DURATION = 1250; // ms
+
 function hiddenTransform(dir: Direction) {
-  if (dir === "left")  return "translateX(-36px)";
-  if (dir === "right") return "translateX(36px)";
-  return "translateY(32px)";
+  if (dir === "left")  return "translateX(-70px) scale(0.96)";
+  if (dir === "right") return "translateX(70px) scale(0.96)";
+  return "translateY(80px) scale(0.96)";
 }
 
 export function FadeUp({
   children,
   delay = 0,
   className = "",
-  threshold = 0.1,
+  threshold = 0.08,
   direction = "up",
 }: FadeUpProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -39,7 +43,7 @@ export function FadeUp({
           observer.unobserve(el);
         }
       },
-      { threshold, rootMargin: "0px 0px -48px 0px" }
+      { threshold, rootMargin: "0px 0px -40px 0px" }
     );
 
     observer.observe(el);
@@ -54,9 +58,10 @@ export function FadeUp({
         mounted
           ? {
               opacity: visible ? 1 : 0,
-              transform: visible ? "translate(0,0)" : hiddenTransform(direction),
-              transition: `opacity 0.85s cubic-bezier(0.22,1,0.36,1) ${delay}ms,
-                           transform 0.85s cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+              transform: visible ? "translateY(0) scale(1) translateX(0)" : hiddenTransform(direction),
+              transition: `opacity ${DURATION}ms ${EASING} ${delay}ms,
+                           transform ${DURATION}ms ${EASING} ${delay}ms`,
+              willChange: "opacity, transform",
             }
           : undefined
       }
