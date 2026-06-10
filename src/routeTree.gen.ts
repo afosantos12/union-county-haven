@@ -13,7 +13,6 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as SellRouteImport } from './routes/sell'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as NeighborhoodsRouteImport } from './routes/neighborhoods'
-import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BuyRouteImport } from './routes/buy'
 import { Route as AboutRouteImport } from './routes/about'
@@ -37,11 +36,6 @@ const SearchRoute = SearchRouteImport.update({
 const NeighborhoodsRoute = NeighborhoodsRouteImport.update({
   id: '/neighborhoods',
   path: '/neighborhoods',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JournalRoute = JournalRouteImport.update({
-  id: '/journal',
-  path: '/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -70,7 +64,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/buy': typeof BuyRoute
   '/contact': typeof ContactRoute
-  '/journal': typeof JournalRoute
   '/neighborhoods': typeof NeighborhoodsRoute
   '/search': typeof SearchRoute
   '/sell': typeof SellRoute
@@ -81,7 +74,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/buy': typeof BuyRoute
   '/contact': typeof ContactRoute
-  '/journal': typeof JournalRoute
   '/neighborhoods': typeof NeighborhoodsRoute
   '/search': typeof SearchRoute
   '/sell': typeof SellRoute
@@ -93,7 +85,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/buy': typeof BuyRoute
   '/contact': typeof ContactRoute
-  '/journal': typeof JournalRoute
   '/neighborhoods': typeof NeighborhoodsRoute
   '/search': typeof SearchRoute
   '/sell': typeof SellRoute
@@ -106,7 +97,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/buy'
     | '/contact'
-    | '/journal'
     | '/neighborhoods'
     | '/search'
     | '/sell'
@@ -117,7 +107,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/buy'
     | '/contact'
-    | '/journal'
     | '/neighborhoods'
     | '/search'
     | '/sell'
@@ -128,7 +117,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/buy'
     | '/contact'
-    | '/journal'
     | '/neighborhoods'
     | '/search'
     | '/sell'
@@ -140,7 +128,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BuyRoute: typeof BuyRoute
   ContactRoute: typeof ContactRoute
-  JournalRoute: typeof JournalRoute
   NeighborhoodsRoute: typeof NeighborhoodsRoute
   SearchRoute: typeof SearchRoute
   SellRoute: typeof SellRoute
@@ -175,13 +162,6 @@ declare module '@tanstack/react-router' {
       path: '/neighborhoods'
       fullPath: '/neighborhoods'
       preLoaderRoute: typeof NeighborhoodsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/journal': {
-      id: '/journal'
-      path: '/journal'
-      fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -220,7 +200,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BuyRoute: BuyRoute,
   ContactRoute: ContactRoute,
-  JournalRoute: JournalRoute,
   NeighborhoodsRoute: NeighborhoodsRoute,
   SearchRoute: SearchRoute,
   SellRoute: SellRoute,
