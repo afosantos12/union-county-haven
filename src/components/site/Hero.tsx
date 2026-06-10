@@ -2,18 +2,16 @@ import { useState } from "react";
 import { Search, MapPin } from "lucide-react";
 import heroHome from "@/assets/hero-home.jpg";
 
-function toZillowUrl(query: string) {
-  const clean = query.trim().replace(/\s+/g, "-");
-  return `https://www.zillow.com/homes/${encodeURIComponent(clean)}_rb/`;
-}
-
 export function Hero() {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!query.trim()) return;
-    window.open(toZillowUrl(query), "_blank", "noopener,noreferrer");
+    // Navigate to the listings/search page, passing query as a param for IDX Broker to pick up
+    const destination = query.trim()
+      ? `/search?q=${encodeURIComponent(query.trim())}`
+      : "/search";
+    window.location.href = destination;
   };
 
   return (

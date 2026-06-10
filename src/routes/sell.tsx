@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
 import { Valuation } from "@/components/site/Valuation";
@@ -56,6 +56,34 @@ function SellPage() {
       </section>
 
       <Valuation />
+
+      {/* Contact CTA */}
+      <section className="gradient-navy text-white">
+        <div className="mx-auto max-w-4xl px-6 py-20 text-center lg:px-10 lg:py-24">
+          <p className="eyebrow" style={{ color: "var(--gold)" }}>Ready to List?</p>
+          <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
+            Let's talk about <span className="italic text-gold">your home</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-xl text-base text-white/80">
+            Schedule a no-obligation seller consultation. We'll walk you through current
+            market conditions, a pricing strategy, and what we'll do to make your listing stand out.
+          </p>
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link
+              to="/contact"
+              className="rounded-sm bg-gold px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-gold-foreground transition-all hover:bg-transparent hover:text-gold hover:ring-1 hover:ring-gold"
+            >
+              Book a Consultation
+            </Link>
+            <a
+              href="tel:+19082766299"
+              className="rounded-sm border border-white/40 px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white transition-all hover:border-gold hover:text-gold"
+            >
+              Call (908) 276-6299
+            </a>
+          </div>
+        </div>
+      </section>
     </SiteLayout>
   );
 }

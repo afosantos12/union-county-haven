@@ -4,10 +4,10 @@ import summit from "@/assets/hood-summit.jpg";
 import kenilworth from "@/assets/hood-kenilworth.jpg";
 
 const hoods = [
-  { name: "Westfield", img: westfield, listings: "42 active" },
-  { name: "Summit", img: summit, listings: "31 active" },
-  { name: "Cranford", img: cranford, listings: "28 active" },
-  { name: "Kenilworth", img: kenilworth, listings: "14 active" },
+  { name: "Westfield", img: westfield, listings: "42 active", search: "/search?q=Westfield+NJ" },
+  { name: "Summit", img: summit, listings: "31 active", search: "/search?q=Summit+NJ" },
+  { name: "Cranford", img: cranford, listings: "28 active", search: "/search?q=Cranford+NJ" },
+  { name: "Kenilworth", img: kenilworth, listings: "14 active", search: "/search?q=Kenilworth+NJ" },
 ];
 
 export function Neighborhoods() {
@@ -29,7 +29,7 @@ export function Neighborhoods() {
           {hoods.map((h) => (
             <a
               key={h.name}
-              href="#"
+              href={h.search}
               className="group relative block aspect-[3/4] overflow-hidden rounded-sm shadow-card-soft"
             >
               <img
