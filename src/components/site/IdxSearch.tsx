@@ -13,8 +13,7 @@ import { useEffect, useRef } from "react";
 // Jersey MLS, and Ocean/Monmouth MLS directly on this page.
 // New listings appear automatically — no manual site updates needed.
 // ─────────────────────────────────────────────────────────────────────────────
-const IDX_SEARCH_EMBED_CODE = "";
-// ↑ Paste your IDX Broker search/map widget embed code here
+const IDX_SEARCH_EMBED_CODE = `<script charset="UTF-8" type="text/javascript" id="idxwidgetsrc-44007" src="//michelledavidrealtygroup.idxbroker.com/idx/mapwidgetjs.php?widgetid=44007"></script>`;
 
 function IdxWidget({ code }: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -42,7 +41,7 @@ function IdxWidget({ code }: { code: string }) {
     return () => { container.innerHTML = ""; };
   }, [code]);
 
-  return <div ref={ref} className="w-full min-h-[600px]" />;
+  return <div ref={ref} className="w-full min-h-[700px]" />;
 }
 
 export function IdxSearch() {
