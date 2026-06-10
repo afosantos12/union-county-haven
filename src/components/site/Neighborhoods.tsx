@@ -4,10 +4,10 @@ import summit from "@/assets/hood-summit.jpg";
 import kenilworth from "@/assets/hood-kenilworth.jpg";
 
 const hoods = [
-  { name: "Westfield", img: westfield, listings: "42 active", search: "/search?q=Westfield+NJ" },
-  { name: "Summit", img: summit, listings: "31 active", search: "/search?q=Summit+NJ" },
-  { name: "Cranford", img: cranford, listings: "28 active", search: "/search?q=Cranford+NJ" },
-  { name: "Kenilworth", img: kenilworth, listings: "14 active", search: "/search?q=Kenilworth+NJ" },
+  { name: "Westfield", img: westfield, search: "/search?q=Westfield+NJ" },
+  { name: "Summit", img: summit, search: "/search?q=Summit+NJ" },
+  { name: "Cranford", img: cranford, search: "/search?q=Cranford+NJ" },
+  { name: "Kenilworth", img: kenilworth, search: "/search?q=Kenilworth+NJ" },
 ];
 
 export function Neighborhoods() {
@@ -45,7 +45,7 @@ export function Neighborhoods() {
                 <div className="h-px w-8 bg-gold transition-all duration-500 group-hover:w-16" />
                 <h3 className="mt-3 font-serif text-2xl">{h.name}</h3>
                 <p className="mt-1 text-xs uppercase tracking-widest text-white/70">
-                  {h.listings}
+                  View Listings →
                 </p>
               </div>
             </a>
