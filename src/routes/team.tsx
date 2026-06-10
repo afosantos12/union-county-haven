@@ -73,12 +73,14 @@ const team: TeamMember[] = [
 
 function TeamMemberCard({ member, revealDelay = 0 }: { member: TeamMember; revealDelay?: number }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-sm border border-border bg-card shadow-card-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury">
-      <div className="relative aspect-[4/5] bg-muted">
+    // overflow-hidden only on the image wrapper, not the article — prevents bio from being clipped
+    <article className="group flex flex-col rounded-sm border border-border bg-card shadow-card-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury">
+      <div className="relative overflow-hidden rounded-t-sm bg-muted">
         <ImageReveal
           src={member.image}
           alt={`${member.name}, ${member.title} at Michelle David Realty Group`}
-          className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+          // Fixed height + object-top ensures face/head is always visible, not torso
+          className="w-full h-80 object-cover object-top transition-transform duration-[1400ms] ease-out group-hover:scale-105"
           delay={revealDelay}
         />
         <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
