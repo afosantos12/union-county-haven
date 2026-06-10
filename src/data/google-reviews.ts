@@ -42,4 +42,4 @@ export const googleReviewsUrl =
 
 // Direct link for clients to leave a new review
 export const googleLeaveReviewUrl =
-  "https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4";
+  "https://www.google.com/search?q=Michelle+David+Realty+Group+Reviews";
