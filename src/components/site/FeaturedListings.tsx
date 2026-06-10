@@ -10,159 +10,129 @@ import { useEffect, useRef } from "react";
 // - New active listings marked as "featured" in IDX Broker appear here
 //   automatically — no manual website updates needed.
 // ─────────────────────────────────────────────────────────────────────────────
-const IDX_FEATURED_LISTINGS_EMBED_CODE = `
-<style>
-  /* ── IDX Broker Showcase — Site-matched styling ── */
+const IDX_FEATURED_LISTINGS_EMBED_CODE = `<script charset="UTF-8" type="text/javascript" id="idxwidgetsrc-44006" src="//michelledavidrealtygroup.idxbroker.com/idx/customshowcasejs.php?widgetid=44006"></script>`;
 
-  #IDX-showcaseWidgetWrap,
-  #IDX-showcaseWidgetWrap * {
-    font-family: inherit;
-    box-sizing: border-box;
-  }
+function applyIdxStyles(container: HTMLElement) {
+  // Force the widget and all its wrappers to full width
+  container.querySelectorAll<HTMLElement>(
+    "#IDX-showcaseWidgetWrap, .IDX-showcase, .IDX-showcaseWrapper"
+  ).forEach((el) => {
+    el.style.width = "100%";
+    el.style.maxWidth = "100%";
+  });
 
-  /* Convert table to responsive grid */
-  .IDX-showcaseTable {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 1.75rem !important;
-    width: 100% !important;
-    border: none !important;
-    border-collapse: unset !important;
-    border-spacing: 0 !important;
-  }
+  // Convert the hardcoded-width table to a full-width responsive grid
+  container.querySelectorAll<HTMLTableElement>("table.IDX-showcaseTable, .IDX-showcaseTable").forEach((table) => {
+    table.removeAttribute("width");
+    table.removeAttribute("cellspacing");
+    table.removeAttribute("cellpadding");
+    table.style.width = "100%";
+    table.style.maxWidth = "100%";
+    table.style.borderCollapse = "separate";
+    table.style.borderSpacing = "0";
+    table.style.display = "grid";
+    table.style.gridTemplateColumns = "repeat(auto-fill, minmax(280px, 1fr))";
+    table.style.gap = "1.75rem";
+    table.style.border = "none";
+  });
 
-  .IDX-showcaseTable tbody { display: contents !important; }
-  .IDX-showcaseTable tr    { display: contents !important; }
+  // tbody and tr must be display:contents for CSS grid to work on table
+  container.querySelectorAll<HTMLElement>("table.IDX-showcaseTable tbody, table.IDX-showcaseTable tr").forEach((el) => {
+    el.style.display = "contents";
+  });
 
-  /* Cards */
-  .IDX-showcaseCell {
-    display: flex !important;
-    flex-direction: column !important;
-    border: 1px solid rgba(27, 43, 75, 0.09) !important;
-    border-radius: 4px !important;
-    overflow: hidden !important;
-    background: #fff !important;
-    padding: 0 !important;
-    vertical-align: top !important;
-    box-shadow: 0 1px 4px rgba(27,43,75,0.06), 0 6px 20px rgba(27,43,75,0.06) !important;
-    transition: transform 0.45s ease, box-shadow 0.45s ease !important;
-    cursor: pointer !important;
-  }
+  // Style each listing card
+  container.querySelectorAll<HTMLTableCellElement>("td.IDX-showcaseCell").forEach((cell) => {
+    cell.style.display = "flex";
+    cell.style.flexDirection = "column";
+    cell.style.border = "1px solid rgba(27,43,75,0.1)";
+    cell.style.borderRadius = "4px";
+    cell.style.overflow = "hidden";
+    cell.style.background = "#fff";
+    cell.style.padding = "0";
+    cell.style.verticalAlign = "top";
+    cell.style.boxShadow = "0 1px 4px rgba(27,43,75,0.06), 0 6px 20px rgba(27,43,75,0.06)";
+    cell.style.transition = "transform 0.45s ease, box-shadow 0.45s ease";
+    cell.style.cursor = "pointer";
+    cell.addEventListener("mouseenter", () => {
+      cell.style.transform = "translateY(-5px)";
+      cell.style.boxShadow = "0 12px 40px rgba(27,43,75,0.18)";
+    });
+    cell.addEventListener("mouseleave", () => {
+      cell.style.transform = "";
+      cell.style.boxShadow = "0 1px 4px rgba(27,43,75,0.06), 0 6px 20px rgba(27,43,75,0.06)";
+    });
+  });
 
-  .IDX-showcaseCell:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 12px 40px rgba(27,43,75,0.16) !important;
-  }
-
-  /* Photo */
-  .IDX-showcaseCell a { display: block !important; overflow: hidden !important; }
-
-  .IDX-showcaseCell a:first-child img,
-  .IDX-showcasePhoto img,
-  .IDX-showcaseCell > a > img,
-  .IDX-showcaseCell img {
-    width: 100% !important;
-    height: 220px !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    display: block !important;
-    transition: transform 1s ease !important;
-  }
-
-  .IDX-showcaseCell:hover img {
-    transform: scale(1.04) !important;
-  }
-
-  /* Gold status bar on hover */
-  .IDX-showcaseCell::after {
-    content: '' !important;
-    display: block !important;
-    height: 3px !important;
-    background: linear-gradient(90deg, transparent, #C9A84C, transparent) !important;
-    opacity: 0 !important;
-    transition: opacity 0.4s ease !important;
-    margin-top: auto !important;
-  }
-
-  .IDX-showcaseCell:hover::after {
-    opacity: 1 !important;
-  }
-
-  /* Text area padding */
-  .IDX-showcaseAddress,
-  .IDX-showcaseCity,
-  .IDX-showcasePrice {
-    text-align: left !important;
-  }
-
-  .IDX-showcaseAddress {
-    padding: 1.1rem 1.25rem 0.2rem !important;
-    font-size: 1rem !important;
-    font-weight: 600 !important;
-    color: #1B2B4B !important;
-    line-height: 1.35 !important;
-  }
-
-  .IDX-showcaseCity {
-    padding: 0 1.25rem 0.3rem !important;
-    font-size: 0.8125rem !important;
-    color: rgba(0,0,0,0.45) !important;
-    letter-spacing: 0.01em !important;
-  }
-
-  .IDX-showcasePrice {
-    padding: 0.4rem 1.25rem 1.2rem !important;
-    font-size: 1.25rem !important;
-    font-weight: 700 !important;
-    color: #1B2B4B !important;
-    letter-spacing: -0.01em !important;
-  }
-
-  /* "View All Results" link */
-  #IDX-showcaseWidgetWrap a[href*="idx"],
-  .IDX-viewAllLink,
-  .IDX-showcaseViewAll,
-  .IDX-showcaseViewAll a {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 0.5rem !important;
-    margin-top: 2rem !important;
-    font-size: 0.7rem !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.18em !important;
-    color: #1B2B4B !important;
-    text-decoration: none !important;
-    border-bottom: 1px solid #C9A84C !important;
-    padding-bottom: 2px !important;
-    transition: color 0.2s ease, border-color 0.2s ease !important;
-  }
-
-  #IDX-showcaseWidgetWrap a[href*="idx"]:hover,
-  .IDX-viewAllLink:hover {
-    color: #C9A84C !important;
-  }
-
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .IDX-showcaseTable {
-      grid-template-columns: repeat(2, 1fr) !important;
+  // Style images inside cards
+  container.querySelectorAll<HTMLElement>("td.IDX-showcaseCell img").forEach((img) => {
+    img.style.width = "100%";
+    img.style.height = "210px";
+    img.style.objectFit = "cover";
+    img.style.objectPosition = "center";
+    img.style.display = "block";
+    img.style.transition = "transform 1s ease";
+    const parent = img.closest("td");
+    if (parent) {
+      parent.addEventListener("mouseenter", () => { img.style.transform = "scale(1.04)"; });
+      parent.addEventListener("mouseleave", () => { img.style.transform = ""; });
     }
-  }
+  });
 
-  @media (max-width: 640px) {
-    .IDX-showcaseTable {
-      grid-template-columns: 1fr !important;
-    }
-  }
-</style>
-<script charset="UTF-8" type="text/javascript" id="idxwidgetsrc-44006" src="//michelledavidrealtygroup.idxbroker.com/idx/customshowcasejs.php?widgetid=44006"></script>
-`;
+  // Style address text
+  container.querySelectorAll<HTMLElement>(".IDX-showcaseAddress").forEach((el) => {
+    el.style.padding = "1rem 1.25rem 0.2rem";
+    el.style.fontSize = "1rem";
+    el.style.fontWeight = "600";
+    el.style.color = "#1B2B4B";
+    el.style.lineHeight = "1.35";
+    el.style.overflow = "hidden";
+    el.style.textOverflow = "ellipsis";
+    el.style.whiteSpace = "nowrap";
+    el.style.textAlign = "left";
+  });
 
-// Safely injects IDX Broker embed codes that contain <script> and <style> tags.
-// dangerouslySetInnerHTML does not execute scripts, so we use useEffect to
-// re-create script elements so the browser actually runs them.
-function IdxEmbed({ code }: { code: string }) {
+  // Style city text
+  container.querySelectorAll<HTMLElement>(".IDX-showcaseCity").forEach((el) => {
+    el.style.padding = "0 1.25rem 0.25rem";
+    el.style.fontSize = "0.8125rem";
+    el.style.color = "rgba(0,0,0,0.45)";
+    el.style.textAlign = "left";
+    el.style.overflow = "hidden";
+    el.style.textOverflow = "ellipsis";
+    el.style.whiteSpace = "nowrap";
+  });
+
+  // Style price text
+  container.querySelectorAll<HTMLElement>(".IDX-showcasePrice").forEach((el) => {
+    el.style.padding = "0.35rem 1.25rem 1.2rem";
+    el.style.fontSize = "1.2rem";
+    el.style.fontWeight = "700";
+    el.style.color = "#1B2B4B";
+    el.style.letterSpacing = "-0.01em";
+    el.style.textAlign = "left";
+  });
+
+  // Style "View All Results" link
+  container.querySelectorAll<HTMLElement>(".IDX-viewAllLink, .IDX-showcaseViewAll a, #IDX-showcaseWidgetWrap > div > a").forEach((el) => {
+    el.style.display = "inline-flex";
+    el.style.alignItems = "center";
+    el.style.gap = "0.5rem";
+    el.style.marginTop = "1.75rem";
+    el.style.fontSize = "0.7rem";
+    el.style.fontWeight = "700";
+    el.style.textTransform = "uppercase";
+    el.style.letterSpacing = "0.18em";
+    el.style.color = "#1B2B4B";
+    el.style.textDecoration = "none";
+    el.style.borderBottom = "1px solid #C9A84C";
+    el.style.paddingBottom = "2px";
+    el.addEventListener("mouseenter", () => { el.style.color = "#C9A84C"; });
+    el.addEventListener("mouseleave", () => { el.style.color = "#1B2B4B"; });
+  });
+}
+
+function IdxFeaturedWidget() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -171,8 +141,9 @@ function IdxEmbed({ code }: { code: string }) {
 
     container.innerHTML = "";
 
+    // Inject the IDX script (re-created as a real DOM script so browser runs it)
     const template = document.createElement("template");
-    template.innerHTML = code;
+    template.innerHTML = IDX_FEATURED_LISTINGS_EMBED_CODE;
 
     Array.from(template.content.childNodes).forEach((node) => {
       if (node.nodeType === Node.ELEMENT_NODE && (node as Element).tagName === "SCRIPT") {
@@ -188,8 +159,21 @@ function IdxEmbed({ code }: { code: string }) {
       }
     });
 
-    return () => { container.innerHTML = ""; };
-  }, [code]);
+    // Watch for IDX content being injected by the async script, then apply styles
+    const observer = new MutationObserver(() => {
+      const hasContent = container.querySelector(".IDX-showcaseCell, .IDX-showcaseTable");
+      if (hasContent) {
+        applyIdxStyles(container);
+      }
+    });
+
+    observer.observe(container, { childList: true, subtree: true, attributes: true });
+
+    return () => {
+      observer.disconnect();
+      container.innerHTML = "";
+    };
+  }, []);
 
   return <div ref={containerRef} className="w-full min-h-[300px]" />;
 }
@@ -217,7 +201,7 @@ export function FeaturedListings() {
         </div>
 
         <div className="mt-14 w-full">
-          <IdxEmbed code={IDX_FEATURED_LISTINGS_EMBED_CODE} />
+          <IdxFeaturedWidget />
         </div>
 
       </div>
