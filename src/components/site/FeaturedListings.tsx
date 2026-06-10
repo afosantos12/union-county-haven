@@ -1,181 +1,185 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // IDX Broker Showcase Widget — Featured Listings
 //
 // - The site's domain must be whitelisted in IDX Broker → Account Settings →
 //   Approved Domains for the widget to load correctly.
-// - Listing photos, prices, statuses, and MLS details come automatically from
-//   IDX Broker, synced from GSMLS, Jersey MLS, and Ocean/Monmouth MLS.
-// - New active listings marked as "featured" in IDX Broker appear here
-//   automatically — no manual website updates needed.
+// - Listing data (photos, prices, addresses, MLS status) is pulled live from
+//   IDX Broker, which syncs automatically from GSMLS, Jersey MLS, and
+//   Ocean/Monmouth MLS.
+// - New featured listings update automatically — no manual site edits needed.
 // ─────────────────────────────────────────────────────────────────────────────
-const IDX_FEATURED_LISTINGS_EMBED_CODE = `<script charset="UTF-8" type="text/javascript" id="idxwidgetsrc-44006" src="//michelledavidrealtygroup.idxbroker.com/idx/customshowcasejs.php?widgetid=44006"></script>`;
+const IDX_WIDGET_SRC =
+  "//michelledavidrealtygroup.idxbroker.com/idx/customshowcasejs.php?widgetid=44006";
+const IDX_WIDGET_ID = "idxwidgetsrc-44006";
 
-function applyIdxStyles(container: HTMLElement) {
-  // Force the widget and all its wrappers to full width
-  container.querySelectorAll<HTMLElement>(
-    "#IDX-showcaseWidgetWrap, .IDX-showcase, .IDX-showcaseWrapper"
-  ).forEach((el) => {
-    el.style.width = "100%";
-    el.style.maxWidth = "100%";
+type Listing = {
+  href: string;
+  imgSrc: string;
+  address: string;
+  city: string;
+  price: string;
+};
+
+// Parses IDX Broker's injected table HTML and extracts listing data
+function parseIdxListings(container: HTMLElement): { listings: Listing[]; viewAllHref: string } {
+  const cells = Array.from(container.querySelectorAll<HTMLElement>("td.IDX-showcaseCell"));
+  const listings: Listing[] = cells.map((cell) => {
+    const link = cell.querySelector<HTMLAnchorElement>("a");
+    const img = cell.querySelector<HTMLImageElement>("img");
+    return {
+      href: link?.href || "#",
+      imgSrc: img?.src || "",
+      address: cell.querySelector(".IDX-showcaseAddress")?.textContent?.trim() || "",
+      city: cell.querySelector(".IDX-showcaseCity")?.textContent?.trim() || "",
+      price: cell.querySelector(".IDX-showcasePrice")?.textContent?.trim() || "",
+    };
   });
 
-  // Convert the hardcoded-width table to a full-width responsive grid
-  container.querySelectorAll<HTMLTableElement>("table.IDX-showcaseTable, .IDX-showcaseTable").forEach((table) => {
-    table.removeAttribute("width");
-    table.removeAttribute("cellspacing");
-    table.removeAttribute("cellpadding");
-    table.style.width = "100%";
-    table.style.maxWidth = "100%";
-    table.style.borderCollapse = "separate";
-    table.style.borderSpacing = "0";
-    table.style.display = "grid";
-    table.style.gridTemplateColumns = "repeat(auto-fill, minmax(280px, 1fr))";
-    table.style.gap = "1.75rem";
-    table.style.border = "none";
-  });
+  // Find the "View All Results" link IDX Broker appends below the table
+  const viewAllEl = container.querySelector<HTMLAnchorElement>(
+    "#IDX-showcaseWidgetWrap a:not(td a), .IDX-viewAllLink"
+  );
+  return { listings, viewAllHref: viewAllEl?.href || "/search" };
+}
 
-  // tbody and tr must be display:contents for CSS grid to work on table
-  container.querySelectorAll<HTMLElement>("table.IDX-showcaseTable tbody, table.IDX-showcaseTable tr").forEach((el) => {
-    el.style.display = "contents";
-  });
+function ListingCard({ listing }: { listing: Listing }) {
+  return (
+    <a
+      href={listing.href}
+      className="group flex flex-col overflow-hidden rounded-sm border border-border bg-card shadow-card-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury no-underline"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+        {listing.imgSrc ? (
+          <img
+            src={listing.imgSrc}
+            alt={listing.address}
+            loading="lazy"
+            className="h-full w-full object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+          />
+        ) : (
+          <div className="h-full w-full bg-muted" />
+        )}
+      </div>
 
-  // Style each listing card
-  container.querySelectorAll<HTMLTableCellElement>("td.IDX-showcaseCell").forEach((cell) => {
-    cell.style.display = "flex";
-    cell.style.flexDirection = "column";
-    cell.style.border = "1px solid rgba(27,43,75,0.1)";
-    cell.style.borderRadius = "4px";
-    cell.style.overflow = "hidden";
-    cell.style.background = "#fff";
-    cell.style.padding = "0";
-    cell.style.verticalAlign = "top";
-    cell.style.boxShadow = "0 1px 4px rgba(27,43,75,0.06), 0 6px 20px rgba(27,43,75,0.06)";
-    cell.style.transition = "transform 0.45s ease, box-shadow 0.45s ease";
-    cell.style.cursor = "pointer";
-    cell.addEventListener("mouseenter", () => {
-      cell.style.transform = "translateY(-5px)";
-      cell.style.boxShadow = "0 12px 40px rgba(27,43,75,0.18)";
-    });
-    cell.addEventListener("mouseleave", () => {
-      cell.style.transform = "";
-      cell.style.boxShadow = "0 1px 4px rgba(27,43,75,0.06), 0 6px 20px rgba(27,43,75,0.06)";
-    });
-  });
-
-  // Style images inside cards
-  container.querySelectorAll<HTMLElement>("td.IDX-showcaseCell img").forEach((img) => {
-    img.style.width = "100%";
-    img.style.height = "210px";
-    img.style.objectFit = "cover";
-    img.style.objectPosition = "center";
-    img.style.display = "block";
-    img.style.transition = "transform 1s ease";
-    const parent = img.closest("td");
-    if (parent) {
-      parent.addEventListener("mouseenter", () => { img.style.transform = "scale(1.04)"; });
-      parent.addEventListener("mouseleave", () => { img.style.transform = ""; });
-    }
-  });
-
-  // Style address text
-  container.querySelectorAll<HTMLElement>(".IDX-showcaseAddress").forEach((el) => {
-    el.style.padding = "1rem 1.25rem 0.2rem";
-    el.style.fontSize = "1rem";
-    el.style.fontWeight = "600";
-    el.style.color = "#1B2B4B";
-    el.style.lineHeight = "1.35";
-    el.style.overflow = "hidden";
-    el.style.textOverflow = "ellipsis";
-    el.style.whiteSpace = "nowrap";
-    el.style.textAlign = "left";
-  });
-
-  // Style city text
-  container.querySelectorAll<HTMLElement>(".IDX-showcaseCity").forEach((el) => {
-    el.style.padding = "0 1.25rem 0.25rem";
-    el.style.fontSize = "0.8125rem";
-    el.style.color = "rgba(0,0,0,0.45)";
-    el.style.textAlign = "left";
-    el.style.overflow = "hidden";
-    el.style.textOverflow = "ellipsis";
-    el.style.whiteSpace = "nowrap";
-  });
-
-  // Style price text
-  container.querySelectorAll<HTMLElement>(".IDX-showcasePrice").forEach((el) => {
-    el.style.padding = "0.35rem 1.25rem 1.2rem";
-    el.style.fontSize = "1.2rem";
-    el.style.fontWeight = "700";
-    el.style.color = "#1B2B4B";
-    el.style.letterSpacing = "-0.01em";
-    el.style.textAlign = "left";
-  });
-
-  // Style "View All Results" link
-  container.querySelectorAll<HTMLElement>(".IDX-viewAllLink, .IDX-showcaseViewAll a, #IDX-showcaseWidgetWrap > div > a").forEach((el) => {
-    el.style.display = "inline-flex";
-    el.style.alignItems = "center";
-    el.style.gap = "0.5rem";
-    el.style.marginTop = "1.75rem";
-    el.style.fontSize = "0.7rem";
-    el.style.fontWeight = "700";
-    el.style.textTransform = "uppercase";
-    el.style.letterSpacing = "0.18em";
-    el.style.color = "#1B2B4B";
-    el.style.textDecoration = "none";
-    el.style.borderBottom = "1px solid #C9A84C";
-    el.style.paddingBottom = "2px";
-    el.addEventListener("mouseenter", () => { el.style.color = "#C9A84C"; });
-    el.addEventListener("mouseleave", () => { el.style.color = "#1B2B4B"; });
-  });
+      <div className="flex flex-1 flex-col p-6">
+        <div className="font-serif text-2xl font-bold text-navy">{listing.price}</div>
+        <h3 className="mt-2 truncate font-serif text-lg text-foreground">{listing.address}</h3>
+        <p className="mt-1 truncate text-sm text-muted-foreground">{listing.city}</p>
+        <div className="mt-4 flex items-center pt-4 border-t border-border">
+          <span className="text-xs font-semibold uppercase tracking-widest text-gold transition-all group-hover:tracking-[0.2em]">
+            View listing →
+          </span>
+        </div>
+      </div>
+    </a>
+  );
 }
 
 function IdxFeaturedWidget() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const hiddenRef = useRef<HTMLDivElement>(null);
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [viewAllHref, setViewAllHref] = useState("/search");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const hidden = hiddenRef.current;
+    if (!hidden) return;
 
-    container.innerHTML = "";
+    // Inject the IDX script into a hidden off-screen div so it renders
+    // without being visible, then we extract and re-render with our styles
+    const script = document.createElement("script");
+    script.charset = "UTF-8";
+    script.type = "text/javascript";
+    script.id = IDX_WIDGET_ID;
+    script.src = IDX_WIDGET_SRC;
+    hidden.appendChild(script);
 
-    // Inject the IDX script (re-created as a real DOM script so browser runs it)
-    const template = document.createElement("template");
-    template.innerHTML = IDX_FEATURED_LISTINGS_EMBED_CODE;
-
-    Array.from(template.content.childNodes).forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE && (node as Element).tagName === "SCRIPT") {
-        const original = node as HTMLScriptElement;
-        const script = document.createElement("script");
-        Array.from(original.attributes).forEach((attr) =>
-          script.setAttribute(attr.name, attr.value)
-        );
-        if (!original.src) script.textContent = original.textContent;
-        container.appendChild(script);
-      } else {
-        container.appendChild(node.cloneNode(true));
-      }
-    });
-
-    // Watch for IDX content being injected by the async script, then apply styles
+    // MutationObserver fires when IDX injects its table into the hidden div
     const observer = new MutationObserver(() => {
-      const hasContent = container.querySelector(".IDX-showcaseCell, .IDX-showcaseTable");
-      if (hasContent) {
-        applyIdxStyles(container);
+      const cells = hidden.querySelectorAll("td.IDX-showcaseCell");
+      if (cells.length > 0) {
+        observer.disconnect();
+        const { listings: parsed, viewAllHref: href } = parseIdxListings(hidden);
+        if (parsed.length > 0) {
+          setListings(parsed);
+          setViewAllHref(href);
+          setLoading(false);
+        }
       }
     });
 
-    observer.observe(container, { childList: true, subtree: true, attributes: true });
+    observer.observe(hidden, { childList: true, subtree: true });
+
+    // Timeout fallback — if IDX doesn't load (e.g. domain not whitelisted), stop spinner
+    const timeout = setTimeout(() => {
+      observer.disconnect();
+      setLoading(false);
+    }, 8000);
 
     return () => {
       observer.disconnect();
-      container.innerHTML = "";
+      clearTimeout(timeout);
+      hidden.innerHTML = "";
     };
   }, []);
 
-  return <div ref={containerRef} className="w-full min-h-[300px]" />;
+  return (
+    <>
+      {/* Hidden IDX render target — off screen, never visible */}
+      <div
+        ref={hiddenRef}
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", top: 0, width: "600px", overflow: "hidden", pointerEvents: "none" }}
+      />
+
+      {loading && (
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex flex-col overflow-hidden rounded-sm border border-border bg-card">
+              <div className="aspect-[4/3] animate-pulse bg-muted" />
+              <div className="p-6 space-y-3">
+                <div className="h-7 w-1/3 animate-pulse rounded bg-muted" />
+                <div className="h-5 w-2/3 animate-pulse rounded bg-muted" />
+                <div className="h-4 w-1/2 animate-pulse rounded bg-muted" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!loading && listings.length > 0 && (
+        <>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {listings.map((listing, i) => (
+              <ListingCard key={i} listing={listing} />
+            ))}
+          </div>
+          <div className="mt-8">
+            <a
+              href={viewAllHref}
+              className="group inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-navy hover:text-gold transition-colors"
+            >
+              View all results
+              <span className="h-px w-10 bg-navy transition-all group-hover:w-16 group-hover:bg-gold" />
+            </a>
+          </div>
+        </>
+      )}
+
+      {!loading && listings.length === 0 && (
+        <div className="flex min-h-[260px] items-center justify-center rounded-sm border-2 border-dashed border-border bg-card text-center px-8 py-16">
+          <div className="max-w-sm">
+            <p className="font-serif text-xl text-navy">Listings loading…</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Connect the site's domain in IDX Broker → Account Settings → Approved Domains to display live listings.
+            </p>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
 export function FeaturedListings() {
