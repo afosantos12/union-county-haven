@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
-import { Stats } from "@/components/site/Stats";
 import { Testimonials } from "@/components/site/Testimonials";
 import heroAbout from "@/assets/hero-about.jpg";
 
@@ -55,7 +54,6 @@ function AboutPage() {
         </div>
       </section>
 
-      <Stats />
       <Testimonials />
     </SiteLayout>
   );
