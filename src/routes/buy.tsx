@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
 import { Valuation } from "@/components/site/Valuation";
+import { FadeUp } from "@/components/site/FadeUp";
 import heroBuy from "@/assets/hero-buy.jpg";
 import { Search, MapPin, Compass, ArrowRight } from "lucide-react";
 
@@ -33,6 +34,7 @@ function BuyPage() {
       {/* Search CTA */}
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto max-w-5xl px-6 lg:px-10">
+          <FadeUp>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -57,6 +59,7 @@ function BuyPage() {
               <Search className="h-4 w-4" /> Search Homes
             </button>
           </form>
+          </FadeUp>
 
           {/* How it works */}
           <div className="mt-16 grid gap-8 md:grid-cols-3">
@@ -64,12 +67,14 @@ function BuyPage() {
               { icon: Compass, title: "Strategy Session", body: "We start with a private consult to map your must-haves, budget, and timeline." },
               { icon: MapPin, title: "Curated Tours", body: "We hand-select properties — including off-market and coming-soon — that fit." },
               { icon: Search, title: "Win the Offer", body: "Sharp negotiation and clean diligence to win without overpaying." },
-            ].map((s) => (
-              <div key={s.title} className="rounded-sm border border-border bg-card p-7">
-                <s.icon className="h-6 w-6 text-gold" />
-                <h3 className="mt-5 font-serif text-xl text-navy">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
-              </div>
+            ].map((s, i) => (
+              <FadeUp key={s.title} delay={i * 100}>
+                <div className="rounded-sm border border-border bg-card p-7 h-full">
+                  <s.icon className="h-6 w-6 text-gold" />
+                  <h3 className="mt-5 font-serif text-xl text-navy">{s.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+                </div>
+              </FadeUp>
             ))}
           </div>
         </div>
@@ -79,7 +84,7 @@ function BuyPage() {
       <section className="bg-secondary py-20 lg:py-28">
         <div className="mx-auto max-w-5xl px-6 lg:px-10">
           <div className="grid items-center gap-10 lg:grid-cols-2">
-            <div>
+            <FadeUp direction="left">
               <p className="eyebrow">Live MLS Data</p>
               <h2 className="mt-4 font-serif text-4xl text-navy md:text-5xl text-balance">
                 Every active listing,<span className="italic"> in one place</span>
@@ -103,8 +108,8 @@ function BuyPage() {
                   Talk to an Agent
                 </Link>
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4 text-center">
+            </FadeUp>
+            <FadeUp direction="right" delay={120} className="grid grid-cols-2 gap-4 text-center">
               {[
                 { stat: "3", label: "MLS Feeds" },
                 { stat: "GSMLS", label: "Garden State MLS" },
@@ -116,7 +121,7 @@ function BuyPage() {
                   <div className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">{item.label}</div>
                 </div>
               ))}
-            </div>
+            </FadeUp>
           </div>
         </div>
       </section>

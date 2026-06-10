@@ -39,10 +39,12 @@ function SellPage() {
 
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto max-w-6xl px-6 lg:px-10">
-          <p className="eyebrow text-center">The Process</p>
-          <h2 className="mt-4 text-center font-serif text-4xl text-navy md:text-5xl text-balance">
-            Four steps from listed to sold
-          </h2>
+          <FadeUp className="text-center">
+            <p className="eyebrow">The Process</p>
+            <h2 className="mt-4 font-serif text-4xl text-navy md:text-5xl text-balance">
+              Four steps from listed to sold
+            </h2>
+          </FadeUp>
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {steps.map((s, i) => (
               <FadeUp key={s.title} delay={i * 100}>
@@ -63,15 +65,17 @@ function SellPage() {
       {/* Contact CTA */}
       <section className="gradient-navy text-white">
         <div className="mx-auto max-w-4xl px-6 py-20 text-center lg:px-10 lg:py-24">
-          <p className="eyebrow" style={{ color: "var(--gold)" }}>Ready to List?</p>
-          <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
-            Let's talk about <span className="italic text-gold">your home</span>
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base text-white/80">
-            Schedule a no-obligation seller consultation. We'll walk you through current
-            market conditions, a pricing strategy, and what we'll do to make your listing stand out.
-          </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <FadeUp>
+            <p className="eyebrow" style={{ color: "var(--gold)" }}>Ready to List?</p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
+              Let's talk about <span className="italic text-gold">your home</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-base text-white/80">
+              Schedule a no-obligation seller consultation. We'll walk you through current
+              market conditions, a pricing strategy, and what we'll do to make your listing stand out.
+            </p>
+          </FadeUp>
+          <FadeUp delay={150} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/contact"
               className="rounded-sm bg-gold px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-gold-foreground transition-all hover:bg-transparent hover:text-gold hover:ring-1 hover:ring-gold"
@@ -84,7 +88,7 @@ function SellPage() {
             >
               Call (908) 276-6299
             </a>
-          </div>
+          </FadeUp>
         </div>
       </section>
     </SiteLayout>

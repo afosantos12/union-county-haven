@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
+import { FadeUp } from "@/components/site/FadeUp";
 import heroTeam from "@/assets/hero-team.jpg";
 import michellePhoto from "@/assets/team-michelle-new.png";
 import afonsoPhoto from "@/assets/team-afonso-new.jpg";
@@ -114,7 +115,7 @@ function TeamPage() {
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
+            <FadeUp direction="left" className="lg:col-span-5">
               <div className="relative">
                 <div className="absolute -inset-4 -z-10 rounded-sm bg-gradient-to-br from-gold/30 to-navy/10 blur-xl" />
                 <div className="relative overflow-hidden rounded-sm border border-gold/40 shadow-luxury">
@@ -124,11 +125,11 @@ function TeamPage() {
                     className="aspect-[4/5] w-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-4 -right-4 hidden h-24 w-24 border-2 border-gold sm:block" />
+                <div className="absolute -bottom-4 -right-4 hidden h-24 w-24 border-2 border-gold sm:block float" />
               </div>
-            </div>
+            </FadeUp>
 
-            <div className="lg:col-span-7">
+            <FadeUp direction="right" delay={100} className="lg:col-span-7">
               <p className="eyebrow">Broker · Owner · Founder</p>
               <h2 className="mt-4 font-serif text-4xl leading-tight text-navy md:text-5xl lg:text-6xl">
                 Michelle <span className="italic text-gold">David</span>
@@ -156,7 +157,7 @@ function TeamPage() {
                   lasting relationships based on trust and integrity.
                 </p>
               </div>
-            </div>
+            </FadeUp>
           </div>
         </div>
       </section>
@@ -164,7 +165,7 @@ function TeamPage() {
       {/* Team grid */}
       <section className="bg-secondary py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="mx-auto max-w-2xl text-center">
+          <FadeUp className="mx-auto max-w-2xl text-center">
             <p className="eyebrow">The Group</p>
             <h2 className="mt-4 font-serif text-4xl text-navy md:text-5xl">
               Our REALTORS<span className="text-gold">®</span>
@@ -173,14 +174,14 @@ function TeamPage() {
               A bilingual, deeply local team — ready to guide you across every corner of the
               Garden State.
             </p>
-          </div>
+          </FadeUp>
 
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:gap-10">
-            <TeamMemberCard member={team[0]} />
-            <TeamMemberCard member={team[1]} />
-            <div className="md:col-span-2 md:mx-auto md:w-1/2">
+            <FadeUp delay={0}><TeamMemberCard member={team[0]} /></FadeUp>
+            <FadeUp delay={120}><TeamMemberCard member={team[1]} /></FadeUp>
+            <FadeUp delay={60} className="md:col-span-2 md:mx-auto md:w-1/2">
               <TeamMemberCard member={team[2]} />
-            </div>
+            </FadeUp>
           </div>
         </div>
       </section>
@@ -188,16 +189,16 @@ function TeamPage() {
       {/* CTA */}
       <section className="gradient-navy text-white">
         <div className="mx-auto max-w-5xl px-6 py-20 text-center lg:px-10 lg:py-24">
-          <p className="eyebrow" style={{ color: "var(--gold)" }}>
-            Let's Talk
-          </p>
-          <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl lg:text-6xl">
-            Ready to Work With <span className="italic text-gold">Our Team?</span>
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-white/80 sm:text-lg">
-            Whether you're buying, selling, renting, or investing, we're here to help.
-          </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <FadeUp>
+            <p className="eyebrow" style={{ color: "var(--gold)" }}>Let's Talk</p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl lg:text-6xl">
+              Ready to Work With <span className="italic text-gold">Our Team?</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base text-white/80 sm:text-lg">
+              Whether you're buying, selling, renting, or investing, we're here to help.
+            </p>
+          </FadeUp>
+          <FadeUp delay={150} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/contact"
               className="rounded-sm bg-gold px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-gold-foreground transition-all hover:bg-transparent hover:text-gold hover:ring-1 hover:ring-gold"
@@ -210,7 +211,7 @@ function TeamPage() {
             >
               View Listings
             </Link>
-          </div>
+          </FadeUp>
         </div>
       </section>
     </SiteLayout>

@@ -130,15 +130,17 @@ function AboutPage() {
       {/* CTA */}
       <section className="gradient-navy text-white">
         <div className="mx-auto max-w-4xl px-6 py-20 text-center lg:px-10 lg:py-24">
-          <p className="eyebrow" style={{ color: "var(--gold)" }}>Work With Us</p>
-          <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
-            Ready to take the <span className="italic text-gold">next step?</span>
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base text-white/80">
-            Whether you're buying, selling, investing, or just exploring your options —
-            we're here to give you straight answers and real guidance.
-          </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <FadeUp>
+            <p className="eyebrow" style={{ color: "var(--gold)" }}>Work With Us</p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
+              Ready to take the <span className="italic text-gold">next step?</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-base text-white/80">
+              Whether you're buying, selling, investing, or just exploring your options —
+              we're here to give you straight answers and real guidance.
+            </p>
+          </FadeUp>
+          <FadeUp delay={150} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/contact"
               className="rounded-sm bg-gold px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-gold-foreground transition-all hover:bg-transparent hover:text-gold hover:ring-1 hover:ring-gold"
@@ -151,7 +153,7 @@ function AboutPage() {
             >
               Browse Listings
             </Link>
-          </div>
+          </FadeUp>
         </div>
       </section>
     </SiteLayout>
